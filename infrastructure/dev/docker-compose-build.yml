@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  api:
+    build:
+      dockerfile: infrastructure/dev/Dockerfile
+      context: .
+    image: giangsoda/nest-base
+    restart: always

@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  nest_base:
+    image: giangsoda/nest-base:0.0.1
+    container_name: nest_base
+    env_file:
+      - ./.env
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    networks:
+      - soda-network
+
+  nest_base_db:
+    container_name: nest_base_db
+    image: mariadb:10.7.4
+    environment:
+      MYSQL_DATABASE: 'soda'
+      MYSQL_USER: 'soda'
+      MYSQL_PASSWORD: 'soda'
+      MYSQL_ROOT_PASSWORD: 'soda'
+    volumes:
+      - '../../../../data_prod/db_prod_request/:/var/lib/mysql'
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - soda-network
+
+
+networks:
+  soda-network:
+    external: false
+    name: soda-network
