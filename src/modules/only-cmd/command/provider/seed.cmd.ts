@@ -1,25 +1,23 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
-import AppSeedFactory from 'src/database/seeds/app.fatory';
+import AppSeedFactory from './factory/app.fatory';
 
 interface SeedCommandOptions {
   class?: string;
 }
 
 @Command({ name: 'seed', description: 'Seeder' })
-export class SeedCommand implements CommandRunner {
-  constructor() {}
-
+export class SeedCmd implements CommandRunner {
   async run(
     passedParam: string[],
     options?: SeedCommandOptions,
   ): Promise<void> {
-    let seedClass = options.class;
+    const seedClass = options.class;
     if (!seedClass) {
-      console.log('Seed class null!');
+      console.info('Seed class null!');
       return;
     }
     const appSeeder = new AppSeedFactory();
-    appSeeder.run(seedClass);
+    await appSeeder.run(seedClass);
   }
 
   @Option({

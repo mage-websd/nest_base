@@ -100,3 +100,19 @@ function attachmentsAppend(attachments) {
 export {
   AppMailer
 };
+
+/**
+call---
+
+AppMailer('soda@soda.io', 'subject', {
+      template: 'mail',
+      templateData: {
+        data: 'soda'
+      },
+      attachments: [{
+        path: 'path/to/file'
+      }],
+      attachRenameFlag: true
+    });
+
+ */

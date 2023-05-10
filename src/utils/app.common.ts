@@ -1,4 +1,10 @@
-import { logErrorConsole } from '../provides/log.provide'
+import { logErrorConsole } from "./logs";
+
+export const sleep = async (time = 10000) => {
+  await new Promise((resolve) => setTimeout(() => resolve(true), time));
+};
+
+
 /**
  * array to object with key by column in item array
  *

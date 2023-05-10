@@ -38,27 +38,7 @@
 1. Create file src/database/seeds/custom.seed.ts
 1. Change file src/database/seeds/index.ts: add content `export * from './custom.seed'`;
 1. In file custom.seed.ts, create class CustomSeed, has function `run()`
-1. Run cmd:
-    1. `yarn build` (if develop is running yarn start:dev, not need build)
-    1. `node dist/main-commander seed --class=custom`
-
-## Queue
-
-1. Setting redis info (use lib bull nodejs)
-1. Add job to queue
-    ```
-        import { AppQueue } from 'src/provides/queue/app.queue';
-
-        const queueJob = new AppQueue('queuename');
-        queueJob.add(payload);
-    ```
-
-1. Run job in queue. Run command:
-    ```
-    node dist/main-commander queue --name=queuename
-    ```
-
-    - opiton `name=queuename` => single job. `name=all` => all job
+1. Run cmd: `yarn cmd seed --class=custom`
 
 ## Docs feature
 [Docs feature view here](docs/)

@@ -17,13 +17,8 @@ export class CreateCollectionVerify1657790876568 implements MigrationInterface {
             generationStrategy: 'increment'
           },
           {
-            name: 'code',
-            type: 'varchar(8)',
-          },
-          {
-            name: 'email',
-            type: 'varchar(100)',
-            isNullable: true,
+            name: 'name',
+            type: 'varchar(255)',
           },
           {
             name: 'createdAt',

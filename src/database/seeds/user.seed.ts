@@ -9,15 +9,15 @@ const USER = [
     },
 ];
 
-export class ChainSeed {
+export class UserSeed {
     async run() {
         for (const i in USER) {
-            await this.insertChainItem(USER[i]);
+            await this.insertUserItem(USER[i]);
         }
-        console.log('Seed chain success');
+        console.log('Seed user success');
     }
 
-    async insertChainItem(item) {
+    async insertUserItem(item: any) {
         const chainItem = await UserRepository.findOne({
             where: {
                 name: item.name,

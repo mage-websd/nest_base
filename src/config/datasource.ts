@@ -1,18 +1,15 @@
-import { DataSource } from "typeorm";
-import config from '.';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import config from './index';
 
-const AppDataSource = new DataSource({
-  type: 'mariadb',
+const dbConfig: DataSourceOptions = {
+  type: 'mysql',
   host: config.DATABASE_HOST,
   port: Number(config.DATABASE_PORT),
   username: config.DATABASE_USERNAME,
   password: config.DATABASE_PASSWORD,
   database: config.DATABASE_NAME,
-  charset: 'UTF8MB4_UNICODE_CI',
   entities: [__dirname + '/../**/*.entity.{ts,js}'],
   synchronize: false,
-  connectTimeout: 10000,
-  bigNumberStrings: false,
   extra: {
     connectionLimit: 500,
   },
@@ -20,14 +17,25 @@ const AppDataSource = new DataSource({
   migrations: [__dirname + '/../database/migrations/*.{ts,js}'],
   logger: 'file',
   logging: config.DATABASE_LOGGING === 'true' ? true : false,
-});
+  ...(config.DATABASE_SSL && {
+    ssl: true,
+    extra: {
+        ssl: {
+            rejectUnauthorized: false,
+        },
+    },
+})
+};
 
-AppDataSource.initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!")
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err)
-    })
+const DBsource = new DataSource(dbConfig);
 
-export default AppDataSource;
+DBsource.initialize()
+  .then(() => {
+    console.info('DB mysql has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Postgres initialization', err);
+  });
+
+export default DBsource;
+export { dbConfig };

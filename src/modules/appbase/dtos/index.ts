@@ -1,1 +1,1 @@
-export * from './collection-similar.dto';
+export * from './appbase.dto';

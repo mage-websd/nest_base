@@ -22,7 +22,7 @@ services:
       MYSQL_PASSWORD: 'soda'
       MYSQL_ROOT_PASSWORD: 'soda'
     volumes:
-      - '../../../../data_prod/db_prod_request/:/var/lib/mysql'
+      - '../../../../data_prod/db_nest_prod/:/var/lib/mysql'
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:

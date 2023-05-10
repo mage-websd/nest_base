@@ -1,1 +1,1 @@
-export * from './chain.seed';
+export * from './user.seed';

@@ -1,6 +1,6 @@
-FROM node:16.15.1 AS Builder
+FROM node:19.9.0 AS Builder
 
-WORKDIR /app/code
+WORKDIR /app/
 
 RUN apt update -y
 COPY ./yarn.lock ./package.json ./
@@ -8,7 +8,7 @@ RUN yarn install
 COPY . .
 RUN yarn prebuild && yarn build
 
-FROM node:16.15.1-alpine
-WORKDIR /app/code
-COPY --from=Builder /app/code ./
-CMD ["yarn", "start:prod"]
+FROM node:19.9.0-alpine
+WORKDIR /app/
+COPY --from=Builder /app/node_modules /app/dist ./
+CMD ["node", "dist/main"]
