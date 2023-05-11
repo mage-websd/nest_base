@@ -31,8 +31,8 @@ const appEnv = process.env.APP_ENV?.toLowerCase();
 
 const configDefault = {
   basedir: baseDir,
+  srcdir: baseDir + 'src/',
   isProd: ['prod', 'production'].includes(appEnv) ? true : false,
-  RUN_ONLY_CMD: process.env.RUN_ONLY_CMD === '1',
 };
 
 const config = Object.assign(configDefault, process.env);

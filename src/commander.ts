@@ -1,7 +1,7 @@
 /**
  * init env run cmd
  */
-process.env.RUN_ONLY_CMD='1';
+process.env.RUN_ONLY_AREA='cmd';
 
 import { CommandFactory } from 'nest-commander';
 import { AppModule } from './app.module';

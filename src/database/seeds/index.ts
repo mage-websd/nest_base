@@ -1,1 +1,1 @@
-export * from './user.seed';
+export * from './admin.seed';

@@ -3,21 +3,24 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import config, { redisOption } from './config';
 import { dbConfig } from './config/datasource';
 import { CommandModule } from './modules/only-cmd/command/command.module';
-import { AppBaseModule } from 'src/modules/appbase/appbase.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 // import and provider run all commands and run server
-let importModules = [
+let importModules: any[] = [
   TypeOrmModule.forRoot(dbConfig),
-] as any[];
+];
 
-if (config.RUN_ONLY_CMD) {
-  // run command line
-  importModules = importModules.concat([CommandModule, ]);
-} else {
-  // run web
-  importModules = importModules.concat([
-    AppBaseModule,
-  ]);
+switch (config.RUN_ONLY_AREA) {
+  case 'cmd':
+    importModules = importModules.concat([CommandModule, ]);
+    break;
+  case 'admin':
+    importModules = importModules.concat([
+      AdminModule,
+    ]);
+    break;
+  default:
+    break;
 }
 
 @Module({

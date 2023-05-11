@@ -1,0 +1,8 @@
+form label.error {
+  color: #a94442;
+  font-weight: normal !important;
+  font-weight: 13px;
+}
+form input.error {
+  border-color: #a94442 !important;
+}

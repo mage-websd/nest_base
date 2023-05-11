@@ -171,7 +171,7 @@ export const ColumnUnsignedPrimaryKey = () =>
 
 export const CreatedAt = (option = { select: true }) =>
   CreateDateColumn({
-    type: 'datetime',
+    type: 'timestamp',
     nullable: true,
     precision: 0,
     select: option.select,
@@ -180,7 +180,7 @@ export const CreatedAt = (option = { select: true }) =>
 
 export const UpdatedAt = (option = { select: true }) =>
   UpdateDateColumn({
-    type: 'datetime',
+    type: 'timestamp',
     nullable: true,
     precision: 0,
     select: option.select,

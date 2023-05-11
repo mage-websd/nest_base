@@ -1,7 +1,7 @@
 import config from './index';
 
 const sitesEnv = {
-  dev: ['http://localhost:3000', '^(https://([^.]*.)?soda.io)$'],
+  dev: ['http://localhost:8000', '^(https://([^.]*.)?soda.io)$'],
   prod: ['^(https://([^.]*.)?soda.io)$'],
 };
 

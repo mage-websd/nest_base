@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
-export class CreateCollectionVerify1657790876568 implements MigrationInterface {
+export class CreateAdmin1657790876568 implements MigrationInterface {
 
-  private tbl = 'User';
+  private tbl = 'admin';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -14,21 +14,30 @@ export class CreateCollectionVerify1657790876568 implements MigrationInterface {
             type: 'int',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment'
+            generationStrategy: 'increment',
+            unsigned: true,
           },
           {
-            name: 'name',
+            name: 'username',
+            type: 'varchar(255)',
+            isUnique: true
+          },
+          {
+            name: 'password',
             type: 'varchar(255)',
           },
           {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',
+            isNullable: true,
           },
           {
             name: 'updatedAt',
             type: 'timestamp',
             default: 'now()',
+            onUpdate: 'CURRENT_TIMESTAMP',
+            isNullable: true
           },
         ]
       }),
