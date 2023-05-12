@@ -9,11 +9,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as session from "express-session";
 import * as passport from "passport";
 import { join } from 'path';
+import * as hbs from 'hbs';
+import * as flash from 'connect-flash';
 import { AppModule } from './app.module';
 import config from './config';
 import CORS_SITE from './config/cros';
 import { LogService } from './utils/logs/log.service';
-import * as hbs from 'hbs';
+import { hbsHelper } from './utils';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -32,15 +34,20 @@ async function bootstrap() {
 
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 
   app.useStaticAssets(join(config.basedir, 'public'));
   app.setBaseViewsDir(join(config.srcdir, 'views', 'admin'));
   app.setViewEngine('hbs');
   app.set('view options', { 
     layout: 'layout/default',
-   });
-   hbs.registerPartials(join(config.srcdir, 'views', 'admin', 'partials'));
-
+  });
+  hbs.registerPartials(join(config.srcdir, 'views', 'admin', 'partials'));
+  hbsHelper();
+  app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    next();
+  });
   await app.listen(config.PORT, () => {
     console.info(`--- 🚀 Server running on ${config.PORT} ---`);
   });

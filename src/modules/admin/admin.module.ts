@@ -1,31 +1,38 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { PassportModule } from "@nestjs/passport"
-import { AuthService, LocalStrategy } from './services';
-import { AuthController, HomeController } from './controllers';
-import { AuthApppBaseMiddleware } from './middleware';
+import { AuthService } from './services';
+import { AuthFilter, LocalStrategy, AuthMiddleware } from './middleware';
+import {
+  AuthController,
+  HomeController,
+  UserController,
+  DashboardController,
+} from './controllers';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards';
 import { SessionSerializer } from './utils';
 
 @Module({
   controllers: [
     AuthController,
-    HomeController
+    HomeController,
+    UserController,
+    DashboardController
   ],
   providers: [
     AuthService,
     LocalStrategy,
     LocalAuthGuard,
     AuthenticatedGuard,
-    SessionSerializer
+    SessionSerializer,
+    AuthFilter
   ],
   imports: [
     PassportModule.register({ session: true })
   ],
 })
-export class AdminModule {}
-
-/**implements NestModule {
+export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthApppBaseMiddleware).forRoutes(AuthController);
+    consumer.apply(AuthMiddleware)
+      .forRoutes(HomeController, DashboardController);
   }
-}*/
+}

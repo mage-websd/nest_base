@@ -2,9 +2,9 @@ import { Response } from 'express';
 
 export const renderHtml = async (res: Response, viewPath: string, data: any = {}) => {
   return new Promise((resolve, reject) => {
-    data = {
+    data = Object.assign(data, {
       layout: null
-    }
+    });
     res.render(
       viewPath,
       data,

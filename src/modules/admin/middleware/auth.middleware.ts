@@ -2,13 +2,12 @@ import { Injectable, NestMiddleware, UnauthorizedException } from "@nestjs/commo
 import { NextFunction, Request, Response } from "express";
 
 @Injectable()
-export class AuthApppBaseMiddleware implements NestMiddleware {
+export class AuthMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
-    const auth = req.header('auth');
-    if (!auth) {
-      throw new UnauthorizedException('Auth not 123456');
+    if (!req.isAuthenticated()) {
+      res.redirect('/admin/login');
+      return;
     }
-    res.locals.auth = {auth: 'user auth'};
     next();
   }
 }

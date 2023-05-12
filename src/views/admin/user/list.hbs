@@ -1,0 +1,51 @@
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>&nbsp;</th>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" placeholder="search =" class="form-control input-list-search" name="id" />
+              </td>
+              <td>
+                <input type="text" placeholder="search contain" class="form-control input-list-search" name="name" />
+              </td>
+              <td>
+                <input type="text" placeholder="search contain" class="form-control input-list-search" name="phone" />
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-list-search"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-list-search-reset"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each dataList.items}}
+            <tr>
+              <td>{{this.id}}</td>
+              <td>{{this.name}}</td>
+              <td>{{this.phone}}</td>
+              <td>
+                <a href="/admin/user/{{this.id}}">
+                 <i class="fa-solid fa-pen-to-square"></i> Edit</td>
+                </a>
+            </tr>
+            {{/each}}
+        </table>
+      </div>
+      <nav aria-label="Page navigation example" class="paginatornav">
+        <span>Total {{dataList.total}} items</span>
+        <ul class="pagination" id="paginationnav" data-page-total="{{dataList.total}}"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+

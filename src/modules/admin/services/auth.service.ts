@@ -1,5 +1,5 @@
 import {
-  Injectable, NotAcceptableException
+  Injectable
 } from '@nestjs/common';
 import { hash, compare } from 'bcrypt';
 import { AdminRepository } from 'src/repositories';
@@ -20,7 +20,7 @@ export class AuthService {
       username: username
     });
     if (!user) {
-      throw new NotAcceptableException('could not find the admin');
+      return null;
     }
     const passwordValid = await this.comparePassword(password, user.password)
     

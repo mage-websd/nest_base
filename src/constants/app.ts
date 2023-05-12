@@ -1,3 +1,6 @@
 export const STATUS = {
-  done: 1,
+  enable: 1,
+  disable: 0,
 };
+
+export const STATUS_ARR = Object.values(STATUS);

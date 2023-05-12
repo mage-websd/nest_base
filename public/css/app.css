@@ -1,3 +1,7 @@
+.txt-error {
+  color: #a94442;
+}
+
 form label.error {
   color: #a94442;
   font-weight: normal !important;
@@ -5,4 +9,25 @@ form label.error {
 }
 form input.error {
   border-color: #a94442 !important;
+}
+
+.toast-wrapper.tw-topcenter{
+  min-height: 200px;
+  position: fixed;
+  top: 3px;
+}
+.layout-navbar-fixed.layout-fixed .wrapper .sidebar.noheader {
+  margin-top: 0px;
+}
+.dark-mode .page-item:not(.active):not(.disabled) .page-link {
+  color: #007bff;
+}
+.paginatornav .pagination {
+  display: inline-flex;
+}
+.input-list-search {
+  font-style: italic;
+}
+.nav-treeview .nav-item {
+  margin-left: 15px;
 }

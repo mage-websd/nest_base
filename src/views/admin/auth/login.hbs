@@ -5,14 +5,19 @@
       <a href="/admin/login" class="h1">Giang<b>Soda</b></a>
     </div>
     <div class="card-body">
+      <div class="autohide" data-delay="5000">
+        {{#each errors}}
+          <p class="txt-error">{{ this }}</p>
+        {{/each}}
+      </div>
       <form action="/admin/login" method="post" id="form-login">
         <div class="form-group mb-3">
           <label for="username">Username</label>
-          <input name="username" type="text" class="form-control" placeholder="username" required id="username" />
+          <input name="username" type="text" class="form-control" placeholder="username" required id="username" autofocus />
         </div>
         <div class="form-group mb-3">
           <label for="password">Password</label>
-          <input name="password" type="text" class="form-control" placeholder="password" required id="password" />
+          <input name="password" type="password" class="form-control" placeholder="password" required id="password" />
         </div>
 
         <div class="row">

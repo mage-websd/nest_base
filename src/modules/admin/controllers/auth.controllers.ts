@@ -7,59 +7,49 @@ import {
   Get,
   UseGuards,
   Req,
-  Render,
-  UseInterceptors,
-  UploadedFile
+  UseFilters,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthService } from '../services';
 import { AdminLoggedDto } from '../dtos';
-import { LocalAuthGuard, AuthenticatedGuard } from '../guards';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { LocalAuthGuard, NoAuthenticatedGuard } from '../guards';
 import { renderHtml } from '../utils';
+import { AuthFilter, NoAuthFilter } from '../middleware';
 
 @Controller('/admin')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor() {}
 
   @Get()
-  async index() {
-    return {
-      status: HttpStatus.OK,
-      message: 'done',
-    }
+  async index(@Res() res: Response) {
+    return res.status(HttpStatus.OK).redirect('/admin/login');
   }
 
   @Get('login')
-  async login(@Res() res: Response) {
+  @UseGuards(NoAuthenticatedGuard)
+  @UseFilters(AuthFilter)
+  async login(@Res() res: Response, @Req() req: any) {
+    const errors = req.flash('errors');
     return res.render(
       'auth/login',
         {
           title: 'Login',
           layout: 'layout/login',
-          jsFooter: await renderHtml(res, 'auth/login-js')
+          jsFooter: await renderHtml(res, 'auth/login-js'),
+          errors: errors
         }
     );
   }
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
+  @UseGuards(LocalAuthGuard)
+  @UseFilters(NoAuthFilter)
   async postLogin(@Res() res: Response, @Req() req: any, @Body() body: AdminLoggedDto) {
-    return res.status(HttpStatus.OK).json({
-      status: HttpStatus.OK,
-      message: "done"
-    });
-  }
-
-  @UseGuards(AuthenticatedGuard)
-  @Get('/protected')
-  getHello(@Req() req: any): string {
-    return req.user;
+    return res.status(HttpStatus.OK).redirect('/admin/dashboard');
   }
 
   @Get('/logout')
-  logout(@Req() req: any) {
+  logout(@Res() res: Response, @Req() req: any) {
     req.session.destroy();
-    return { msg: 'The user session has ended' }
+    return res.redirect('/admin/login');
   }
 }

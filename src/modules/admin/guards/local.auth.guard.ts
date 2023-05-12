@@ -14,7 +14,6 @@ export class LocalAuthGuard extends AuthGuard("local") {
       });
     });
     const result = (await super.canActivate(context)) as boolean;
-    
     await super.logIn(request);
     return result;
   }
