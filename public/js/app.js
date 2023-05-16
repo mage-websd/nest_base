@@ -128,10 +128,10 @@ const listSearch = () => {
     if (urlParams.size > 0) {
       urlParams.delete('page');
     }
-    urlParams.forEach(function(value, key) {
+    urlParams.forEach(function (value, key) {
       formVal[key] = value;
     });
-    domInputs.each(function() {
+    domInputs.each(function () {
       const domInput = $(this);
       formVal[domInput.attr('name')] = domInput.val();
     });
@@ -139,7 +139,7 @@ const listSearch = () => {
     window.location.href = url;
   };
 
-  
+
   // init value input search text
   domInputs.each(function () {
     const domInput = $(this);
@@ -154,10 +154,10 @@ const listSearch = () => {
       submitFormSearch();
     }
   });
-  $('.btn-list-search').click(function() {
+  $('.btn-list-search').click(function () {
     submitFormSearch();
   });
-  $('.btn-list-search-reset').click(function() {
+  $('.btn-list-search-reset').click(function () {
     domInputs.each(function () {
       $(this).val('');
       submitFormSearch();
@@ -173,8 +173,23 @@ const formsValidate = () => {
 }
 const formDisabled = () => {
   $('form button[type="submit"]').prop('disabled', false);
-  $('form').on('submit', function() {
-    $(this).find('button[type="submit"]').prop('disabled', true);
+  $('form').on('submit', function () {
+    var that = $(this);
+    setTimeout(function () {
+      if (that.valid()) {
+        that.find('button[type="submit"]').prop('disabled', true);
+      }
+    }, 200);
+  });
+}
+
+const datetimePicker = () => {
+  $('.datepicker').datetimepicker({
+    format: 'yyyy-MM-DD',
+    icons: {
+      previous: "fa-solid fa-caret-left",
+      next: "fa-solid fa-caret-right",
+    },
   });
 }
 
@@ -196,4 +211,5 @@ jQuery(function ($) {
   trycatchcb(listSearch);
   trycatchcb(formsValidate);
   trycatchcb(formDisabled);
+  trycatchcb(datetimePicker)
 });

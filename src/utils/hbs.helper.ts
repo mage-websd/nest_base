@@ -23,4 +23,16 @@ export const hbsHelper = () => {
     }
     return html;
   });
+
+  hbs.registerHelper('optionToText', function(value: any, objValues: any) {
+    if (!objValues || typeof objValues.lookupProperty === 'function') {
+      objValues = STATUS;
+    }
+    for (const k in objValues) {
+      if (value == objValues[k]) {
+        return k;
+      }
+    }
+    return '';
+  });
 };

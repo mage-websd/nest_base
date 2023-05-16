@@ -4,14 +4,49 @@
       <form action="/admin/user/save" method="post" class="form-validate">
         <input type="hidden" name="id" value="{{item.id}}" />
         <div class="form-group">
-          <label for="name">Tên</label>
-          <input type="text" class="form-control" name="name" value="{{item.name}}" 
-            id="name" aria-describedby="name" placeholder="Name" required />
+          <label for="name">Name</label>
+          <input type="text" class="form-control" name="name" value="{{item.name}}" id="name" aria-describedby="name"
+            placeholder="Name" required />
         </div>
         <div class="form-group">
-          <label for="phone">Số điện thoại</label>
-          <input type="text" class="form-control" name="phone" value="{{item.phone}}" 
-            id="phone" placeholder="Phone" />
+          <label for="phone">Phone</label>
+          <input type="text" class="form-control" name="phone" value="{{item.phone}}" id="phone" placeholder="Phone" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" value="{{item.email}}" id="email" placeholder="Email"
+            email />
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea name="address" class="form-control" id="address" placeholder="Address">{{item.address}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select name="gender" class="form-control">
+            {{{optionsHtml item.gender gender}}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="birth">Birthday</label>
+          <div class="input-group date">
+            <input type="text" class="form-control datepicker" name="birth" value="{{item.birthday}}"/>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="favorite">Favorite</label>
+          <textarea name="favorite" class="form-control" id="favorite" placeholder="Favorite">{{item.favorite}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="refCode">RefCode</label>
+          <input type="text" class="form-control" name="refCode" value="{{item.refCode}}" id="refCode" placeholder="RefCode" />
+        </div>
+        <div class="form-group">
+          <label for="refFrom">RefFrom</label>
+          <input type="text" class="form-control" name="refFrom" value="{{item.refFrom}}" id="refFrom" placeholder="RefFrom" />
         </div>
         <div class="form-group">
           <label for="status">Status</label>

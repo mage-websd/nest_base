@@ -13,6 +13,7 @@ import { paginatorNavFind, saveItem } from 'src/utils';
 import { UserRepository } from 'src/repositories';
 import { PaginateDto, UserSaveDto, userSearch, userSelect } from '../dtos';
 import { User } from 'src/entities';
+import { GENDER } from 'src/constants';
 
 @Controller('/admin/user')
 export class UserController {
@@ -40,8 +41,9 @@ export class UserController {
       'user/edit',
         {
           title: 'Thêm User',
-          menuActive: JSON.stringify(['user']),
-          item: item
+          menuActive: JSON.stringify(['user', 'user-add']),
+          item: item,
+          gender: GENDER
         }
     );
   }
@@ -56,7 +58,8 @@ export class UserController {
           infosFlash: infos,
           title: 'User ' + item.name,
           menuActive: JSON.stringify(['user']),
-          item: item
+          item: item,
+          gender: GENDER
         }
     );
   }
@@ -65,10 +68,10 @@ export class UserController {
   async save(@Res() res: Response, @Req() req: any, @Body() userSaveDto: UserSaveDto) {
     const item = await saveItem(UserRepository, userSaveDto);
     if (!item) {
-      req.flash('errors', 'Không tìm thấy user!!!');
+      req.flash('errors', 'Not found user!!!');
       return res.redirect('/admin/user');
     }
-    req.flash('infos', 'Save user thành công!');
+    req.flash('infos', 'Save user success!');
     return res.redirect('/admin/user/' + item.id);
   }
 }

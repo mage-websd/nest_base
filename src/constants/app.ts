@@ -3,4 +3,7 @@ export const STATUS = {
   disable: 0,
 };
 
-export const STATUS_ARR = Object.values(STATUS);
+export const GENDER = {
+  male: 1,
+  female: 2,
+};
