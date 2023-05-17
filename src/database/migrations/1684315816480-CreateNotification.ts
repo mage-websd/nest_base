@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
-export class CreateUser1683952997679 implements MigrationInterface {
-  private tbl = 'user';
+export class CreateNotification1684315816480 implements MigrationInterface {
+  private tbl = 'notification';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -17,63 +17,27 @@ export class CreateUser1683952997679 implements MigrationInterface {
             unsigned: true,
           },
           {
-            name: 'name',
+            name: 'title',
             type: 'varchar(255)',
           },
           {
-            name: 'phone',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'email',
-            type: 'varchar(100)',
-            isNullable: true,
-          },
-          {
-            name: 'address',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'gender',
-            type: 'smallint',
-            isNullable: true,
-          },
-          {
-            name: 'birth',
-            type: 'timestamp',
-            isNullable: true,
-          },
-          {
-            name: 'favorite',
+            name: 'desc',
             type: 'text',
             isNullable: true,
           },
           {
-            name: 'refCode',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'refFrom',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'username',
+            name: 'image',
             type: 'varchar(255)',
-            isUnique: true,
             isNullable: true,
           },
           {
-            name: 'password',
-            type: 'varchar(255)',
+            name: 'device',
+            type: 'text',
             isNullable: true,
           },
           {
             name: 'status',
-            type: 'SMALLINT',
+            type: 'smallint',
             isNullable: true,
             default: 1,
           },
@@ -92,8 +56,7 @@ export class CreateUser1683952997679 implements MigrationInterface {
           },
         ]
       }),
-      true,
-    );
+    true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

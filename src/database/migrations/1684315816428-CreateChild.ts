@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
-export class CreateUser1683952997679 implements MigrationInterface {
-  private tbl = 'user';
+export class CreateChild1684315816428 implements MigrationInterface {
+  private tbl = 'child';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -17,22 +17,17 @@ export class CreateUser1683952997679 implements MigrationInterface {
             unsigned: true,
           },
           {
+            name: 'userId',
+            type: 'int',
+            unsigned: true,
+          },
+          {
             name: 'name',
             type: 'varchar(255)',
           },
           {
-            name: 'phone',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'email',
-            type: 'varchar(100)',
-            isNullable: true,
-          },
-          {
-            name: 'address',
-            type: 'varchar(50)',
+            name: 'nick',
+            type: 'varchar(255)',
             isNullable: true,
           },
           {
@@ -46,34 +41,23 @@ export class CreateUser1683952997679 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'duebirth',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
+            name: 'placebirth',
+            type: 'varchar(255)',
+            isNullable: true,
+          },
+          {
             name: 'favorite',
             type: 'text',
             isNullable: true,
           },
           {
-            name: 'refCode',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'refFrom',
-            type: 'varchar(50)',
-            isNullable: true,
-          },
-          {
-            name: 'username',
-            type: 'varchar(255)',
-            isUnique: true,
-            isNullable: true,
-          },
-          {
-            name: 'password',
-            type: 'varchar(255)',
-            isNullable: true,
-          },
-          {
             name: 'status',
-            type: 'SMALLINT',
+            type: 'smallint',
             isNullable: true,
             default: 1,
           },
@@ -92,8 +76,7 @@ export class CreateUser1683952997679 implements MigrationInterface {
           },
         ]
       }),
-      true,
-    );
+    true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

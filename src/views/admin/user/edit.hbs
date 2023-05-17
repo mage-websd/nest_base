@@ -1,10 +1,10 @@
 <div class="col-12">
   <div class="card">
     <div class="card-body">
-      <form action="/admin/user/save" method="post" class="form-validate">
+      <form action="/admin/user/save" method="post" class="form-validate" data-btn-disable="btn-ref-disable">
         <input type="hidden" name="id" value="{{item.id}}" />
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name <code>*</code></label>
           <input type="text" class="form-control" name="name" value="{{item.name}}" id="name" aria-describedby="name"
             placeholder="Name" required />
         </div>
@@ -30,7 +30,7 @@
         <div class="form-group">
           <label for="birth">Birthday</label>
           <div class="input-group date">
-            <input type="text" class="form-control datepicker" name="birth" value="{{item.birthday}}"/>
+            <input type="text" class="form-control datepicker" name="birth" value="{{callFnProperty item 'getDate' 'birth'}}"/>
             <div class="input-group-append">
               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
@@ -54,8 +54,17 @@
             {{{optionsHtml item.status}}}
           </select>
         </div>
-        <button type="submit" class="btn btn-primary" disabled>Submit</button>
+        <button type="submit" class="btn btn-primary btn-ref-disable" disabled>Submit</button>
       </form>
+      {{!-- delete item --}}
+      {{#if item.id}}
+        <div class="form-del-item float-right">
+        <form action="/admin/user/delete/{{item.id}}" method="post" class="form-del" data-btn-disable="btn-ref-disable">
+          <button type="submit" class="btn btn-danger btn-ref-disable" disabled>Delete</button>
+        </form>
+        </div>
+      {{/if}}
+      {{!-- //end end delete item --}}
     </div>
   </div>
 </div>

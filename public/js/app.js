@@ -173,14 +173,29 @@ const formsValidate = () => {
 }
 const formDisabled = () => {
   $('form button[type="submit"]').prop('disabled', false);
-  $('form').on('submit', function () {
+  $('form.form-validate').on('submit', function () {
     var that = $(this);
     setTimeout(function () {
-      if (that.valid()) {
+      if (typeof that.valid !== 'function' || that.valid()) {
         that.find('button[type="submit"]').prop('disabled', true);
+        if (that.data('btn-disable')) {
+          $(`.${that.data('btn-disable')}`).prop('disabled', true);
+        }
       }
-    }, 200);
+    }, 10);
   });
+}
+const formDelelteConfirm = () => {
+  $('.form-del').submit(function(event) {
+    var that = $(this);
+    if (confirm('Are you sure DELETE?')) {
+      if (that.data('btn-disable')) {
+        $(`.${that.data('btn-disable')}`).prop('disabled', true);
+      }
+      return true;
+    }
+    event.preventDefault();
+  })
 }
 
 const datetimePicker = () => {
@@ -211,5 +226,6 @@ jQuery(function ($) {
   trycatchcb(listSearch);
   trycatchcb(formsValidate);
   trycatchcb(formDisabled);
-  trycatchcb(datetimePicker)
+  trycatchcb(formDelelteConfirm);
+  trycatchcb(datetimePicker);
 });

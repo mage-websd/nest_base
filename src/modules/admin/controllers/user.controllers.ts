@@ -7,71 +7,49 @@ import {
   Param,
   Body,
   Post,
+  Delete,
 } from '@nestjs/common';
-import { Response } from 'express';
-import { paginatorNavFind, saveItem } from 'src/utils';
+import { Response, Request } from 'express';
 import { UserRepository } from 'src/repositories';
-import { PaginateDto, UserSaveDto, userSearch, userSelect } from '../dtos';
+import { PaginateDto, userSearch, userSelect } from '../dtos';
 import { User } from 'src/entities';
 import { GENDER } from 'src/constants';
+import { UserSaveDto } from 'src/modules/abase/dto';
+import { AbaseManageController, OptionsList } from './abase-manage.controllers';
+import { sleep } from 'src/utils';
 
 @Controller('/admin/user')
-export class UserController {
-  constructor() {}
+export class UserController extends AbaseManageController {
+  protected key = 'user';
+  protected repository = UserRepository;
+  protected entity = User;
+  protected dataResMore = {gender: GENDER};
 
   @Get()
-  async index(@Res() res: Response,@Req() req: any, @Query() query: PaginateDto) {
-    const errors = req.flash('errors');
-    const dataList = await paginatorNavFind(UserRepository, query, userSearch, {select: userSelect});
-    return res.render(
-      'user/list',
-        {
-          errorsFlash: errors,
-          title: 'User list',
-          menuActive: JSON.stringify(['user', 'user-list']),
-          dataList: dataList
-        }
-    );
+  async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
+    return super.index(res, req, query, {
+      searchCol: userSearch,
+      selectCol: userSelect
+    } as OptionsList);
   }
 
   @Get('/create')
-  async create(@Res() res: Response, @Req() req: any) {
-    const item = new User();
-    return res.render(
-      'user/edit',
-        {
-          title: 'Thêm User',
-          menuActive: JSON.stringify(['user', 'user-add']),
-          item: item,
-          gender: GENDER
-        }
-    );
+  async create(@Res() res: Response) {
+    return super.create(res);
   }
 
   @Get('/:id')
   async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
-    const infos = req.flash('infos');
-    const item = await UserRepository.findOneBy({id: id});
-    return res.render(
-      'user/edit',
-        {
-          infosFlash: infos,
-          title: 'User ' + item.name,
-          menuActive: JSON.stringify(['user']),
-          item: item,
-          gender: GENDER
-        }
-    );
+    super.edit(res, req, id);
   }
 
   @Post('/save')
-  async save(@Res() res: Response, @Req() req: any, @Body() userSaveDto: UserSaveDto) {
-    const item = await saveItem(UserRepository, userSaveDto);
-    if (!item) {
-      req.flash('errors', 'Not found user!!!');
-      return res.redirect('/admin/user');
-    }
-    req.flash('infos', 'Save user success!');
-    return res.redirect('/admin/user/' + item.id);
+  async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: UserSaveDto) {
+    return super.save(res, req, itemSaveDto);
+  }
+
+  @Post('/delete/:id')
+  async delete(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
+    return super.delete(res, req, id);
   }
 }

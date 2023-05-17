@@ -60,29 +60,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item" data-menu-open="user">
-            <a href="#" class="nav-link" data-menu="user">
-              <i class="nav-icon fa-solid fa-users"></i>
-              <p>
-                User
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/admin/user" class="nav-link" data-menu="user-list">
-                  <i class="nav-icon fa-solid fa-list"></i>
-                  <p>Danh sách</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/user/create" class="nav-link" data-menu="user-add">
-                  <i class="nav-icon fa-solid fa-plus"></i>
-                  <p>Thêm</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          {{{renderMenu}}}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

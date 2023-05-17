@@ -27,3 +27,18 @@ export class UserSaveDto {
   @IsDateString()
   birth: Date
 }
+
+export class ConfigSaveDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  id: number
+
+  @IsNotEmpty()
+  @IsString()
+  key: string;
+
+  @IsNotEmpty()
+  @IsString()
+  value: string;
+}

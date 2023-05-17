@@ -34,3 +34,6 @@ form input.error {
 .nav-treeview .nav-item {
   margin-left: 15px;
 }
+.form-del-item {
+  margin-top: -37px;
+}

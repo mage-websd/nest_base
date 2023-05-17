@@ -2,38 +2,22 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
 
-@Entity('user')
-export class User extends AbaseExtends {
+@Entity('child')
+export class Child extends AbaseExtends {
 
-  static filled = [
-    'name',
-    'phone',
-    'email',
-    'address',
-    'gender',
-    'birth',
-    'favorite',
-    'refCode',
-    'refFrom',
-    'status',
-    'username',
-    'password'
-  ];
+  static filled = ['name', 'userId', 'nick', 'gender', 'birth', 'duebirth', 'placebirth', 'favorite', 'status'];
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
+  userId: number;
+
+  @Column()
   name: string;
 
   @Column()
-  phone: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  address: string;
+  nick: string;
 
   @Column()
   gender: number;
@@ -42,19 +26,13 @@ export class User extends AbaseExtends {
   birth: Date;
 
   @Column()
+  duebirth: Date;
+
+  @Column()
+  placebirth: string;
+
+  @Column()
   favorite: string;
-
-  @Column()
-  refCode: string;
-
-  @Column()
-  refFrom: string;
-
-  @Column()
-  username: string;
-
-  @Column()
-  password: string;
 
   @Column()
   status: number;

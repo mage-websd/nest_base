@@ -49,7 +49,11 @@ export const paginatorNavFind = async (repository: Repository<any>, query: any, 
   const where = whereObj(query, searchObj);
   return {
     total: await repository.count(where),
-    items: await repository.find({...selectObj, ...paginateObj(query), ...where}),
+    items: await repository.find({...selectObj, ...paginateObj(query), ...where, ...{
+      order: {
+        id: "DESC",
+      },
+    }}),
   }
 };
 

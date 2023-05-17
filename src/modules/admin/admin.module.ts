@@ -7,6 +7,7 @@ import {
   HomeController,
   UserController,
   DashboardController,
+  ConfigController
 } from './controllers';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards';
 import { SessionSerializer } from './utils';
@@ -16,7 +17,8 @@ import { SessionSerializer } from './utils';
     AuthController,
     HomeController,
     UserController,
-    DashboardController
+    DashboardController,
+    ConfigController
   ],
   providers: [
     AuthService,
@@ -24,7 +26,7 @@ import { SessionSerializer } from './utils';
     LocalAuthGuard,
     AuthenticatedGuard,
     SessionSerializer,
-    AuthFilter
+    AuthFilter,
   ],
   imports: [
     PassportModule.register({ session: true })
