@@ -12,7 +12,7 @@ export class UserSaveDto {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Type(() => Number)
   @IsIn(Object.values(STATUS))
   status: number

@@ -7,40 +7,33 @@ import {
   Param,
   Body,
   Post,
-  Delete,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserRepository } from 'src/repositories';
-import { PaginateDto, userSearch, userSelect } from '../dtos';
+import { PaginateDto, userListSelect, userEditFieldList } from '../dtos';
 import { User } from 'src/entities';
-import { GENDER } from 'src/constants';
 import { UserSaveDto } from 'src/modules/abase/dto';
-import { AbaseManageController, OptionsList } from './abase-manage.controllers';
-import { sleep } from 'src/utils';
+import { AbaseManageController } from './abase-manage.controllers';
 
 @Controller('/admin/user')
 export class UserController extends AbaseManageController {
   protected key = 'user';
   protected repository = UserRepository;
   protected entity = User;
-  protected dataResMore = {gender: GENDER};
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
-    return super.index(res, req, query, {
-      searchCol: userSearch,
-      selectCol: userSelect
-    } as OptionsList);
+    return super.index(res, req, query, userListSelect);
   }
 
   @Get('/create')
   async create(@Res() res: Response) {
-    return super.create(res);
+    return super.create(res, userEditFieldList);
   }
 
   @Get('/:id')
   async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
-    super.edit(res, req, id);
+    super.edit(res, req, id, userEditFieldList);
   }
 
   @Post('/save')

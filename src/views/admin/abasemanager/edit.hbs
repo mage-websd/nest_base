@@ -1,0 +1,57 @@
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <form action="/admin/{{pageKey}}/save" method="post" class="form-validate" data-btn-disable="btn-ref-disable">
+        <input type="hidden" name="id" value="{{item.id}}" />
+
+        {{#each editFieldList}}
+          <div class="form-group">
+            <label for="{{this.key}}">
+              {{#if this.title}}{{this.title}}{{else}}{{this.key}}{{/if}}
+              {{#if this.required}} <code>*</code>{{/if}}
+            </label>
+
+            {{#if (ifEquals this.type 'textarea')}}
+              <textarea name="{{this.key}}" class="form-control" id="{{this.key}}"
+                placeholder="{{this.title}}">{{callPropertyStr ../item this.key}}</textarea>
+
+            {{else if (ifEquals this.type 'select')}}
+              <select name="{{this.key}}" class="form-control">
+                {{#each this.options}}
+                  <option{{#if (ifEquals (callPropertyStr ../../item ../this.key) this)}} selected{{/if}}
+                    value="{{this}}">{{@key}}</option>
+                {{/each}}
+              </select>
+
+            {{else if (ifEquals this.type 'date')}}
+              <div class="input-group date">
+                <input type="text" class="form-control datepicker" name="{{this.key}}"
+                  value="{{callFnProperty ../item 'getDate' this.key}}" />
+                <div class="input-group-append">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+
+            {{else}}
+              <input type="{{#if this.type}}{{this.type}}{{else}}text{{/if}}" class="form-control" name="{{this.key}}" 
+                value="{{callPropertyStr ../item this.key}}" id="{{this.key}}" 
+                aria-describedby="{{this.key}}" placeholder="{{this.title}}"{{#if this.required}} required{{/if}} />
+            {{/if}}
+
+          </div>
+        {{/each}}
+
+        <button type="submit" class="btn btn-primary btn-ref-disable" disabled>Submit</button>
+      </form>
+      {{!-- delete item --}}
+      {{#if item.id}}
+        <div class="form-del-item float-right">
+        <form action="/admin/{{pageKey}}/delete/{{item.id}}" method="post" class="form-del" data-btn-disable="btn-ref-disable">
+          <button type="submit" class="btn btn-danger btn-ref-disable" disabled>Delete</button>
+        </form>
+        </div>
+      {{/if}}
+      {{!-- //end end delete item --}}
+    </div>
+  </div>
+</div>

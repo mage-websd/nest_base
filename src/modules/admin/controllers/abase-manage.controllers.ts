@@ -10,39 +10,27 @@ import { paginatorNavFind, saveItem } from 'src/utils';
 import { PaginateDto } from '../dtos';
 import { Repository } from 'typeorm';
 
-class OptionSearch {
-  [key:string]: string;
-}
-class OptionSelect {
-  [key:string]: boolean;
-}
-
-export class OptionsList {
-  searchCol: OptionSearch;
-  selectCol: OptionSelect
-}
-
 export class AbaseManageController {
-  protected key = 'user';
+  protected key: string;
   protected repository: Repository<any>;
   protected entity: any;
-  protected dataResMore = {};
-
   constructor() {}
 
   /**
    * @Get()
    */
-  async index(@Res() res: Response, @Req() req: any, @Query() query: PaginateDto, options: OptionsList) {
-    const dataList = await paginatorNavFind(this.repository, query, options.searchCol, {select: options.selectCol});
+  async index(@Res() res: Response, @Req() req: any, @Query() query: PaginateDto, itemListSelect: any) {
+    const dataList = await paginatorNavFind(this.repository, query, itemListSelect, {select: Object.keys(itemListSelect)});
     return res.render(
-      `${this.key}/list`,
+      'abasemanager/list',
         {
           errorsFlash: req.flash('errors'),
           infosFlash: req.flash('infos'),
           title: `${this.key} list`,
           menuActive: JSON.stringify([this.key, `${this.key}-list`]),
-          dataList: dataList
+          dataList: dataList,
+          itemListSelect: itemListSelect,
+          pageKey: this.key,
         }
     );
   }
@@ -50,32 +38,36 @@ export class AbaseManageController {
   /**
    * @Get('/create')
    */
-  async create(@Res() res: Response) {
+  async create(@Res() res: Response, itemEditFieldList: any) {
     const item = new this.entity();
     return res.render(
-      `${this.key}/edit`,
-        {...{
-          title: `create ${this.key}`,
-          menuActive: JSON.stringify([this.key, `${this.key}-add`]),
-          item: item
-        },...this.dataResMore}
+      'abasemanager/edit',
+      {
+        title: `create ${this.key}`,
+        menuActive: JSON.stringify([this.key, `${this.key}-add`]),
+        item: item,
+        pageKey: this.key,
+        editFieldList: itemEditFieldList,
+      }
     );
   }
 
   /**
    * @Get('/:id')
    */
-  async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
+  async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number, itemEditFieldList: any) {
     const infos = req.flash('infos');
     const item = await this.repository.findOneBy({id: id});
     return res.render(
-      `${this.key}/edit`,
-        {...{
+      `abasemanager/edit`,
+        {
           infosFlash: infos,
           title: `${this.key} ${item.name}`,
           menuActive: JSON.stringify([this.key]),
           item: item,
-        },...this.dataResMore}
+          pageKey: this.key,
+          editFieldList: itemEditFieldList,
+        }
     );
   }
 

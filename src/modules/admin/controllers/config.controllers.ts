@@ -8,68 +8,41 @@ import {
   Body,
   Post,
 } from '@nestjs/common';
-import { Response } from 'express';
-import { paginatorNavFind, saveItem } from 'src/utils';
+import { Response, Request } from 'express';
 import { ConfigRepository } from 'src/repositories';
-import { PaginateDto, configSearch, configSelect } from '../dtos';
+import { PaginateDto, configListSelect, configEditFieldList } from '../dtos';
 import { Config } from 'src/entities';
 import { ConfigSaveDto } from 'src/modules/abase/dto';
+import { AbaseManageController } from './abase-manage.controllers';
 
 @Controller('/admin/config')
-export class ConfigController {
-  constructor() {}
+export class ConfigController extends AbaseManageController {
+  protected key = 'config';
+  protected repository = ConfigRepository;
+  protected entity = Config;
 
   @Get()
-  async index(@Res() res: Response,@Req() req: any, @Query() query: PaginateDto) {
-    const errors = req.flash('errors');
-    const dataList = await paginatorNavFind(ConfigRepository, query, configSearch, {select: configSelect});
-    return res.render(
-      'config/list',
-        {
-          errorsFlash: errors,
-          title: 'Config list',
-          menuActive: JSON.stringify(['config', 'config-list']),
-          dataList: dataList
-        }
-    );
+  async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
+    return super.index(res, req, query, configListSelect);
   }
 
   @Get('/create')
-  async create(@Res() res: Response, @Req() req: any) {
-    const item = new Config();
-    return res.render(
-      'config/edit',
-        {
-          title: 'Create Config',
-          menuActive: JSON.stringify(['config', 'config-add']),
-          item: item,
-        }
-    );
+  async create(@Res() res: Response) {
+    return super.create(res, configEditFieldList);
   }
 
   @Get('/:id')
   async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
-    const infos = req.flash('infos');
-    const item = await ConfigRepository.findOneBy({id: id});
-    return res.render(
-      'config/edit',
-        {
-          infosFlash: infos,
-          title: 'Config ' + item.key,
-          menuActive: JSON.stringify(['config']),
-          item: item,
-        }
-    );
+    super.edit(res, req, id, configEditFieldList);
   }
 
   @Post('/save')
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: ConfigSaveDto) {
-    const item = await saveItem(ConfigRepository, itemSaveDto);
-    if (!item) {
-      req.flash('errors', 'Not found config!!!');
-      return res.redirect('/admin/config');
-    }
-    req.flash('infos', 'Save config success!');
-    return res.redirect('/admin/config/' + item.id);
+    return super.save(res, req, itemSaveDto);
+  }
+
+  @Post('/delete/:id')
+  async delete(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
+    return super.delete(res, req, id, 'key');
   }
 }

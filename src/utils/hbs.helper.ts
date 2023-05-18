@@ -9,8 +9,8 @@ export const hbsHelper = () => {
     return options.inverse(this);
   });
 
-  hbs.registerHelper('ifEquals', function (arg1: any, arg2: any, options: any) {
-    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+  hbs.registerHelper('ifEquals', function (arg1: any, arg2: any) {
+    return arg1 === arg2;
   });
 
   hbs.registerHelper('optionsHtml', function (value: any, objValues: any) {
@@ -19,7 +19,7 @@ export const hbsHelper = () => {
       objValues = STATUS;
     }
     for (const k in objValues) {
-      html += `<option value="${objValues[k]}"${value == objValues[k] ? ' selected' : ''}>${k}</option>`
+      html += `<option value="${objValues[k]}"${value === objValues[k] ? ' selected' : ''}>${k}</option>`
     }
     return html;
   });
@@ -38,6 +38,22 @@ export const hbsHelper = () => {
 
   hbs.registerHelper('callFnProperty', function (item: any, fn: string, prop?: string) {
     return item[fn](prop);
+  });
+
+  hbs.registerHelper('callPropertyStr', function (item: any, prop: string) {
+    return item[prop];
+  });
+
+  hbs.registerHelper('callPropertyOptionToText', function (item: any, prop: string, objValues: any) {
+    if (!objValues || typeof objValues.lookupProperty === 'function') {
+      objValues = STATUS;
+    }
+    for (const k in objValues) {
+      if (item[prop] == objValues[k]) {
+        return k;
+      }
+    }
+    return '';
   });
 
   hbs.registerHelper('renderMenu', function () {

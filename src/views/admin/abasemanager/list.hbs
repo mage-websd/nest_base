@@ -1,0 +1,65 @@
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              {{#each itemListSelect}}
+                <th>{{@key}}</th>
+              {{/each}}
+              <th>&nbsp;</th>
+            </tr>
+            <tr>
+              {{#each itemListSelect}}
+                <td>
+                  {{#if this.search}}
+                    {{#if this.options}}
+                      <select name="{{@key}}" class="form-control input-list-search">
+                        <option value=""></option>
+                        {{#each this.options}}
+                          <option value="{{this}}">{{@key}}</option>
+                        {{/each}}
+                      </select>
+                    {{else}}
+                      <input placeholder="search {{this.search}}"
+                        type="text" class="form-control input-list-search" name="{{@key}}" />
+                    {{/if}}
+                  {{/if}}
+                </td>
+              {{/each}}
+              <td>
+                <button type="button" class="btn btn-primary btn-list-search"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-list-search-reset"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each dataList.items}}
+            <tr>
+              {{#each ../itemListSelect}}
+                <td>
+                  {{#if this.options}}
+                    {{{callPropertyOptionToText ../this @key this.options}}}
+                  {{else}}
+                    {{callPropertyStr ../this @key}}
+                  {{/if}}
+                </td>
+              {{/each}}
+              <td>
+                <a href="/admin/{{../pageKey}}/{{this.id}}">
+                 <i class="fa-solid fa-pen-to-square"></i> Edit
+                </a>
+              </td>
+            </tr>
+            {{/each}}
+        </table>
+      </div>
+      <nav aria-label="Page navigation" class="paginatornav">
+        <span>Total {{dataList.total}} items</span>
+        <ul class="pagination" id="paginationnav" data-page-total="{{dataList.total}}"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

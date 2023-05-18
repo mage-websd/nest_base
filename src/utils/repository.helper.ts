@@ -23,10 +23,10 @@ export const paginateObj = (queryObj: any = {}) => {
 export const whereObj = (query: any, searchObj: Object) => {
   const result = {};
   for (const col in searchObj) {
-    if (!query[col]) {
+    if (!query[col] || !searchObj[col].search) {
       continue;
     }
-    const operator = searchObj[col];
+    const operator = searchObj[col].search;
     switch (operator) {
       case '=':
         result[col] = query[col];
@@ -45,8 +45,8 @@ export const whereObj = (query: any, searchObj: Object) => {
  * find option with paginate, where, select
  * searchObj = {name: 'like', 'email': '='}
  */
-export const paginatorNavFind = async (repository: Repository<any>, query: any, searchObj?: Object, selectObj?: Object) => {
-  const where = whereObj(query, searchObj);
+export const paginatorNavFind = async (repository: Repository<any>, query: any, itemListSelect?: Object, selectObj?: Object) => {
+  const where = whereObj(query, itemListSelect);
   return {
     total: await repository.count(where),
     items: await repository.find({...selectObj, ...paginateObj(query), ...where, ...{
