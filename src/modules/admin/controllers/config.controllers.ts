@@ -33,7 +33,7 @@ export class ConfigController extends AbaseManageController {
 
   @Get('/:id')
   async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number) {
-    super.edit(res, req, id, configEditFieldList);
+    super.edit(res, req, id, configEditFieldList, 'key');
   }
 
   @Post('/save')

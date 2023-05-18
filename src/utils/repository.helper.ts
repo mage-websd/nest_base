@@ -1,4 +1,5 @@
 import { ILike, Repository } from "typeorm"
+import { getPathUrlFile } from "./file";
 
 /**
  * pagination obj in find options typeorm
@@ -64,7 +65,7 @@ export const paginatorNavFind = async (repository: Repository<any>, query: any, 
  * @param dto object form
  * @returns item entity
  */
-export const saveItem = async (repository: Repository<any>, dto: any) => {
+export const saveItem = async (repository: Repository<any>, dto: any, optionsSave: any={}) => {
   const entity: any = repository.target;
   let item: any = null;
   if (dto.id) {
@@ -78,9 +79,12 @@ export const saveItem = async (repository: Repository<any>, dto: any) => {
     item = repository.create();
   }
   entity.filled.forEach((col: string) => {
-    if (typeof dto[col] === 'string' || typeof dto[col] === 'number') {
+    if (typeof dto[col] === 'string' || typeof dto[col] === 'number' || dto[col] === null) {
       item[col] = dto[col];
     }
   })
+  if (optionsSave.file) {
+    item[optionsSave.file.fieldname] = getPathUrlFile(optionsSave.file);
+  }
   return await repository.save(item);
 }

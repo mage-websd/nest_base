@@ -37,3 +37,12 @@ form input.error {
 .form-del-item {
   margin-top: -37px;
 }
+.img-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 5px;
+}
+.img-preview-list img {
+  max-width: 100px;
+  max-height: 100px;
+}

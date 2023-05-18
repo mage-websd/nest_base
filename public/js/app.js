@@ -169,7 +169,12 @@ const listSearch = () => {
  * form validate, form disable submit
  */
 const formsValidate = () => {
-  $(".form-validate").validate();
+  $(".form-validate:not(.fv-cc)").validate();
+  if (typeof validateRuler === 'function') {
+    $('.form-validate.fv-cc').validate({
+      rules: validateRuler(),
+    });
+  }
 }
 const formDisabled = () => {
   $('form button[type="submit"]').prop('disabled', false);
@@ -186,7 +191,7 @@ const formDisabled = () => {
   });
 }
 const formDelelteConfirm = () => {
-  $('.form-del').submit(function(event) {
+  $('.form-del').submit(function (event) {
     var that = $(this);
     if (confirm('Are you sure DELETE?')) {
       if (that.data('btn-disable')) {
@@ -204,6 +209,17 @@ const datetimePicker = () => {
     icons: {
       previous: "fa-solid fa-caret-left",
       next: "fa-solid fa-caret-right",
+    },
+  });
+  $('.datetimepicker').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+    // inline: true,
+    sideBySide: true,
+    icons: {
+      previous: "fa-solid fa-caret-left",
+      next: "fa-solid fa-caret-right",
+      up: 'fa-solid fa-caret-up text-light',
+      down: 'fa-solid fa-caret-down text-light',
     },
   });
 }

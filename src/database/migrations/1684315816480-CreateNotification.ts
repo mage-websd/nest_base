@@ -42,6 +42,11 @@ export class CreateNotification1684315816480 implements MigrationInterface {
             default: 1,
           },
           {
+            name: 'date',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

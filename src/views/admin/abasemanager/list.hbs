@@ -6,7 +6,13 @@
           <thead>
             <tr>
               {{#each itemListSelect}}
-                <th>{{@key}}</th>
+                <th>
+                {{#if this.title}}
+                  {{this.title}}
+                {{else}}
+                  {{@key}}
+                {{/if}}
+                </th>
               {{/each}}
               <th>&nbsp;</th>
             </tr>
@@ -42,6 +48,12 @@
                 <td>
                   {{#if this.options}}
                     {{{callPropertyOptionToText ../this @key this.options}}}
+                  {{else if (ifEquals this.type 'image')}}
+                    {{#if (callPropertyStr ../this @key)}}
+                      <div class="img-preview-list">
+                      <img src="{{callPropertyStr ../this @key}}">
+                      </div>
+                    {{/if}}
                   {{else}}
                     {{callPropertyStr ../this @key}}
                   {{/if}}

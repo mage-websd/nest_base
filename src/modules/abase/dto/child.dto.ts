@@ -1,8 +1,8 @@
 import { Type } from 'class-transformer';
 import { IsDateString, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, ValidateIf } from 'class-validator';
-import { STATUS, GENDER } from 'src/constants';
+import { GENDER, STATUS } from 'src/constants';
 
-export class UserSaveDto {
+export class ChildSaveDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -13,33 +13,35 @@ export class UserSaveDto {
   name: string;
 
   @IsOptional()
-  @Type(() => Number)
-  @IsIn(Object.values(STATUS))
-  status: number
+  @IsString()
+  nick: string;
 
   @IsOptional()
   @Type(() => Number)
   @IsIn(Object.values(GENDER))
   gender: number
-
+  
   @IsOptional()
   @ValidateIf(o => o.birth != '')
   @IsDateString()
   birth: Date
-}
 
-export class ConfigSaveDto {
+  @IsOptional()
+  @ValidateIf(o => o.duebirth != '')
+  @IsDateString()
+  duebirth: Date
+
+  @IsOptional()
+  @IsString()
+  placebirth: string;
+
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  id: number
+  userId: number;
 
-  @IsNotEmpty()
-  @IsString()
-  key: string;
-
-  @IsNotEmpty()
-  @IsString()
-  value: string;
+  @IsOptional()
+  @Type(() => Number)
+  @IsIn(Object.values(STATUS))
+  status: number
 }
-

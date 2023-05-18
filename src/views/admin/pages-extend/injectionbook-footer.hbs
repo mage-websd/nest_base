@@ -1,0 +1,17 @@
+<script>
+  const validateRuler = function() {
+    return {
+      'userId': {
+        required: function () {
+          return $('#childId').val().length === 0;
+        }
+      },
+      'childId': {
+        required: function () {
+          return $('#userId').val().length === 0;
+
+        }
+      }
+    }
+  }
+</script>

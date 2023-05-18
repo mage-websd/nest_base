@@ -5,7 +5,7 @@ import { AbaseExtends } from './abase-extend';
 @Entity('timeline')
 export class Timeline extends AbaseExtends {
 
-  static filled = ['vacId', 'vacDate', 'address', 'userId', 'childId', 'note'];
+  static filled = ['title', 'desc', 'date', 'image', 'userId', 'status'];
 
   @PrimaryGeneratedColumn()
   id: number;

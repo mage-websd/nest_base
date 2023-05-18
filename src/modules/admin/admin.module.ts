@@ -7,7 +7,13 @@ import {
   HomeController,
   UserController,
   DashboardController,
-  ConfigController
+  ConfigController,
+  BannerController,
+  VacxinController,
+  TimelineController,
+  ChildController,
+  NotificationController,
+  InjectionBookController
 } from './controllers';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards';
 import { SessionSerializer } from './utils';
@@ -18,7 +24,13 @@ import { SessionSerializer } from './utils';
     HomeController,
     UserController,
     DashboardController,
-    ConfigController
+    ConfigController,
+    BannerController,
+    VacxinController,
+    TimelineController,
+    ChildController,
+    NotificationController,
+    InjectionBookController,
   ],
   providers: [
     AuthService,

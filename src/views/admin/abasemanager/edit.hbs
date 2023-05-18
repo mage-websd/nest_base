@@ -1,7 +1,8 @@
 <div class="col-12">
   <div class="card">
     <div class="card-body">
-      <form action="/admin/{{pageKey}}/save" method="post" class="form-validate" data-btn-disable="btn-ref-disable">
+      <form action="/admin/{{pageKey}}/save" method="post" class="form-validate{{#if isFormValidCustom}} fv-cc{{/if}}" 
+        data-btn-disable="btn-ref-disable"{{#if isFormFile}} enctype="multipart/form-data"{{/if}}>
         <input type="hidden" name="id" value="{{item.id}}" />
 
         {{#each editFieldList}}
@@ -13,10 +14,10 @@
 
             {{#if (ifEquals this.type 'textarea')}}
               <textarea name="{{this.key}}" class="form-control" id="{{this.key}}"
-                placeholder="{{this.title}}">{{callPropertyStr ../item this.key}}</textarea>
+                placeholder="{{this.title}}"{{#if this.required}} required{{/if}} >{{callPropertyStr ../item this.key}}</textarea>
 
             {{else if (ifEquals this.type 'select')}}
-              <select name="{{this.key}}" class="form-control">
+              <select name="{{this.key}}" class="form-control"{{#if this.required}} required{{/if}}>
                 {{#each this.options}}
                   <option{{#if (ifEquals (callPropertyStr ../../item ../this.key) this)}} selected{{/if}}
                     value="{{this}}">{{@key}}</option>
@@ -24,12 +25,25 @@
               </select>
 
             {{else if (ifEquals this.type 'date')}}
-              <div class="input-group date">
-                <input type="text" class="form-control datepicker" name="{{this.key}}"
-                  value="{{callFnProperty ../item 'getDate' this.key}}" />
-                <div class="input-group-append">
+              {{!-- <div class="input-group date"> --}}
+                <input type="text" class="form-control {{#if this.time}}datetimepicker{{else}}datepicker{{/if}}" name="{{this.key}}"
+                  value="{{callFnProperty ../item 'getDate' this.key}}"{{#if this.required}} required{{/if}} />
+                {{!-- <div class="input-group-append">
                   <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
+              </div> --}}
+
+            {{else if (ifEquals this.type 'image')}}
+              <input type="file" class="form-control" name="{{this.key}}" accept="image/png,image/jpg,image/jpeg"
+                value="{{callPropertyStr ../item this.key}}" id="{{this.key}}" 
+                aria-describedby="{{this.key}}" placeholder="{{this.title}}"
+                {{#if this.required}}{{#unless (callPropertyStr ../item this.key)}} required{{/unless}}{{/if}}
+                data-rules-image="jpg|jpeg|png"
+                />
+              <div class="img-preview" data-ref-id="{{this.key}}">
+                {{#if (callPropertyStr ../item this.key)}}
+                  <img src="{{callPropertyStr ../item this.key}}" />
+                {{/if}}
               </div>
 
             {{else}}

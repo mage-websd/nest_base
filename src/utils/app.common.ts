@@ -50,3 +50,13 @@ export function stringToJson(data) {
     return {};
   }
 }
+
+
+export const objEmptyToNull = (objItem: any, arrKey: string[]) => {
+  for (const k of arrKey) {
+    if (typeof objItem[k] === 'string' && objItem[k] === '') {
+      objItem[k] = null;
+    }
+  }
+  return objItem;
+}

@@ -32,6 +32,7 @@ const appEnv = process.env.APP_ENV?.toLowerCase();
 const configDefault = {
   basedir: baseDir,
   srcdir: baseDir + 'src/',
+  storagedir: baseDir + 'public/storage/',
   isProd: ['prod', 'production'].includes(appEnv) ? true : false,
 };
 

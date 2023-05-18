@@ -2,10 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
 
-@Entity('config')
+@Entity('notification')
 export class Notification extends AbaseExtends {
 
-  static filled = ['key', 'value'];
+  static filled = ['title', 'desc', 'image', 'device', 'status'];
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -24,6 +24,9 @@ export class Notification extends AbaseExtends {
 
   @Column()
   status: number;
+
+  @Column()
+  date: Date
 
   @CreatedAt()
   createdAt: Date;

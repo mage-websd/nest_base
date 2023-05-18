@@ -64,9 +64,39 @@ export const hbsHelper = () => {
         iconFa: 'fa-solid fa-users',
       },
       {
+        title: 'Children',
+        name: 'child',
+        iconFa: 'fa-solid fa-children',
+      },
+      {
+        title: 'Vacxin',
+        name: 'vacxin',
+        iconFa: 'fa-sharp fa-solid fa-vial-circle-check',
+      },
+      {
+        title: 'Injection Book',
+        name: 'injectionbook',
+        iconFa: 'fa-solid fa-syringe',
+      },
+      {
+        title: 'Timeline',
+        name: 'timeline',
+        iconFa: 'fa-solid fa-timeline',
+      },
+      {
+        title: 'Banner',
+        name: 'banner',
+        iconFa: 'fa-solid fa-panorama',
+      },
+      {
         title: 'Config',
         name: 'config',
         iconFa: 'fa-solid fa-gear',
+      },
+      {
+        title: 'Notification',
+        name: 'notification',
+        iconFa: 'fa-solid fa-bell',
       },
     ];
     let html = '';
