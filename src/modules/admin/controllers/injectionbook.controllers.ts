@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   Post,
+  UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { InjectionBookRepository } from 'src/repositories';
@@ -16,12 +17,12 @@ import { InjectionBookSaveDto } from 'src/modules/abase/dto';
 import { AbaseManageController } from './abase-manage.controllers';
 import { objEmptyToNull } from 'src/utils';
 import { renderHtml } from '../utils';
+import { ValidationFilter } from '../middleware';
 
 @Controller('/admin/injectionbook')
 export class InjectionBookController extends AbaseManageController {
   protected key = 'injectionbook';
   protected repository = InjectionBookRepository;
-  protected entity = InjectionBook;
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
@@ -29,8 +30,8 @@ export class InjectionBookController extends AbaseManageController {
   }
 
   @Get('/create')
-  async create(@Res() res: Response) {
-    return super.create(res, ibEditFieldList, {
+  async create(@Res() res: Response, @Req() req: any) {
+    return super.create(res, req, ibEditFieldList, {
       isFormValidCustom: true,
       jsFooter: await renderHtml(res, 'pages-extend/injectionbook-footer'),
     });
@@ -45,6 +46,7 @@ export class InjectionBookController extends AbaseManageController {
   }
 
   @Post('/save')
+  @UseFilters(ValidationFilter)
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: InjectionBookSaveDto) {
     return super.save(res, req, objEmptyToNull(itemSaveDto, ['userId', 'childId']));
   }

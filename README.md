@@ -43,6 +43,11 @@
 ## Database demo
 1. Add admin user: yarn cmd seed --class=admin (user: admin / admin123)
 
+## Run app
+1. Admin area: `yarn admin` (dev) || `yarn admin:prod` (production)
+1. API area: `yarn api` (dev) || `yarn api:prod` (production)
+1. Build: `yarn build` (build before run production)
+
 ## Docs feature
 [Docs feature view here](docs/)
 
@@ -50,19 +55,6 @@
 
 ```bash
 $ yarn install
-```
-
-## Running the app
-
-```bash
-# development
-$ yarn start
-
-# watch mode
-$ yarn start:dev
-
-# production mode
-$ yarn start:prod
 ```
 
 ## Test

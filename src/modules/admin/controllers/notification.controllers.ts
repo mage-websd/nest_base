@@ -9,6 +9,7 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
+  UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,12 +19,12 @@ import { Notification } from 'src/entities';
 import { NotificationSaveDto } from 'src/modules/abase/dto';
 import { AbaseManageController } from './abase-manage.controllers';
 import { multerImage } from 'src/utils';
+import { ValidationFilter } from '../middleware';
 
 @Controller('/admin/notification')
 export class NotificationController extends AbaseManageController {
   protected key = 'notification';
   protected repository = NoticationRepository;
-  protected entity = Notification;
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
@@ -31,8 +32,8 @@ export class NotificationController extends AbaseManageController {
   }
 
   @Get('/create')
-  async create(@Res() res: Response) {
-    return super.create(res, notificationEditFieldList, {isFormFile: true});
+  async create(@Res() res: Response, @Req() req: any) {
+    return super.create(res, req, notificationEditFieldList, {isFormFile: true});
   }
 
   @Get('/:id')
@@ -41,6 +42,7 @@ export class NotificationController extends AbaseManageController {
   }
 
   @Post('/save')
+  @UseFilters(ValidationFilter)
   @UseInterceptors(FileInterceptor('image', multerImage({subpath: 'noti'})))
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: NotificationSaveDto, @UploadedFile() file) {
     return super.save(res, req, itemSaveDto, {

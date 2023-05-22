@@ -46,6 +46,10 @@
                 {{/if}}
               </div>
 
+            {{else if (ifEquals this.type 'password')}}
+              <input type="password" class="form-control" name="{{this.key}}" id="{{this.key}}" 
+                aria-describedby="{{this.key}}" placeholder="{{this.title}}"{{#if this.required}} required{{/if}} />
+
             {{else}}
               <input type="{{#if this.type}}{{this.type}}{{else}}text{{/if}}" class="form-control" name="{{this.key}}" 
                 value="{{callPropertyStr ../item this.key}}" id="{{this.key}}" 

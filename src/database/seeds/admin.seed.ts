@@ -1,5 +1,6 @@
 import { AdminRepository } from 'src/repositories';
 import { AuthService } from 'src/modules/admin/services';
+import { hashPassword } from 'src/utils';
 
 const USER = [
   {
@@ -27,7 +28,7 @@ export class AdminSeed {
       return;
     }
     const authService = new AuthService();
-    item.password = await authService.hashPassword(item.password);
+    item.password = await hashPassword(item.password);
     const newItem = AdminRepository.create(item);
     console.log('seed admin item', newItem);
     await AdminRepository.save(newItem);

@@ -3,6 +3,7 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UnauthorizedException, ForbiddenException } from '@nestjs/common';
@@ -27,7 +28,21 @@ export class AuthFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
-    const req = ctx.getRequest();
     response.status(status).redirect('/admin/dashboard');
+  }
+}
+
+@Catch(BadRequestException)
+export class ValidationFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const status = exception.getStatus();
+    const req = ctx.getRequest();
+    const resError: any = exception.getResponse();
+    if (resError && resError.message && resError.message.length > 0) {
+      req.flash('errors', resError.message);
+    }    
+    response.status(status).redirect('back');
   }
 }

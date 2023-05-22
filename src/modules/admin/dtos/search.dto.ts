@@ -13,6 +13,9 @@ export const userListSelect = {
   email: {
     search: 'contain',
   },
+  username: {
+    search: 'contain',
+  },
   status: {
     search: '=',
     options: STATUS
@@ -60,6 +63,14 @@ export const userEditFieldList = [
     key: 'status',
     type: 'select',
     options: STATUS,
+  },
+  {
+    key: 'username',
+  },
+  {
+    key: 'password',
+    type: 'password',
+    title: 'password',
   },
 ];
 

@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   Post,
+  UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { VacxinRepository } from 'src/repositories';
@@ -14,12 +15,12 @@ import { PaginateDto, vacxinListSelect, vacxinEditFieldList } from '../dtos';
 import { Vacxin } from 'src/entities';
 import { VacxinSaveDto } from 'src/modules/abase/dto';
 import { AbaseManageController } from './abase-manage.controllers';
+import { ValidationFilter } from '../middleware';
 
 @Controller('/admin/vacxin')
 export class VacxinController extends AbaseManageController {
   protected key = 'vacxin';
   protected repository = VacxinRepository;
-  protected entity = Vacxin;
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
@@ -27,8 +28,8 @@ export class VacxinController extends AbaseManageController {
   }
 
   @Get('/create')
-  async create(@Res() res: Response) {
-    return super.create(res, vacxinEditFieldList);
+  async create(@Res() res: Response, @Req() req: any) {
+    return super.create(res, req, vacxinEditFieldList);
   }
 
   @Get('/:id')
@@ -37,6 +38,7 @@ export class VacxinController extends AbaseManageController {
   }
 
   @Post('/save')
+  @UseFilters(ValidationFilter)
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: VacxinSaveDto) {
     return super.save(res, req, itemSaveDto);
   }

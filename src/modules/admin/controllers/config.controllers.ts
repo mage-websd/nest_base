@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   Post,
+  UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ConfigRepository } from 'src/repositories';
@@ -14,12 +15,12 @@ import { PaginateDto, configListSelect, configEditFieldList } from '../dtos';
 import { Config } from 'src/entities';
 import { ConfigSaveDto } from 'src/modules/abase/dto';
 import { AbaseManageController } from './abase-manage.controllers';
+import { ValidationFilter } from '../middleware';
 
 @Controller('/admin/config')
 export class ConfigController extends AbaseManageController {
   protected key = 'config';
   protected repository = ConfigRepository;
-  protected entity = Config;
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
@@ -27,8 +28,8 @@ export class ConfigController extends AbaseManageController {
   }
 
   @Get('/create')
-  async create(@Res() res: Response) {
-    return super.create(res, configEditFieldList);
+  async create(@Res() res: Response, @Req() req: any) {
+    return super.create(res, req, configEditFieldList);
   }
 
   @Get('/:id')
@@ -37,6 +38,7 @@ export class ConfigController extends AbaseManageController {
   }
 
   @Post('/save')
+  @UseFilters(ValidationFilter)
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: ConfigSaveDto) {
     return super.save(res, req, itemSaveDto);
   }

@@ -13,7 +13,6 @@ import { Repository } from 'typeorm';
 export class AbaseManageController {
   protected key: string;
   protected repository: Repository<any>;
-  protected entity: any;
   constructor() {}
 
   /**
@@ -38,11 +37,13 @@ export class AbaseManageController {
   /**
    * @Get('/create')
    */
-  async create(@Res() res: Response, itemEditFieldList: any, moreDataRender: any={}) {
-    const item = new this.entity();
+  async create(@Res() res: Response, @Res() req: any, itemEditFieldList: any, moreDataRender: any={}) {
+    const item = this.repository.create();
+    const errors = req.flash('errors');
     return res.render(
       'abasemanager/edit',
       {...{
+        errorsFlash: errors,
         title: `create ${this.key}`,
         menuActive: JSON.stringify([this.key, `${this.key}-add`]),
         item: item,
@@ -57,6 +58,7 @@ export class AbaseManageController {
    */
   async edit(@Res() res: Response, @Req() req: any, @Param('id') id: number, itemEditFieldList: any, titleColShow='', moreDataRender: any={}) {
     const infos = req.flash('infos');
+    const errors = req.flash('errors');
     const item = await this.repository.findOneBy({id: id});
     if (!item) {
       req.flash('errors', `Not found ${this.key}!!!`);
@@ -69,6 +71,7 @@ export class AbaseManageController {
       `abasemanager/edit`,
         {...{
           infosFlash: infos,
+          errorsFlash: errors,
           title: `${this.key} ${item[titleColShow]}`,
           menuActive: JSON.stringify([this.key]),
           item: item,

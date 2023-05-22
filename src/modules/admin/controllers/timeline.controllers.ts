@@ -9,6 +9,7 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
+  UseFilters,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { TimelineRepository } from 'src/repositories';
@@ -18,12 +19,12 @@ import { TimelineSaveDto } from 'src/modules/abase/dto';
 import { AbaseManageController } from './abase-manage.controllers';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerImage } from 'src/utils';
+import { ValidationFilter } from '../middleware';
 
 @Controller('/admin/timeline')
 export class TimelineController extends AbaseManageController {
   protected key = 'timeline';
   protected repository = TimelineRepository;
-  protected entity = Timeline;
 
   @Get()
   async index(@Res() res: Response, @Req() req: Request, @Query() query: PaginateDto) {
@@ -31,8 +32,8 @@ export class TimelineController extends AbaseManageController {
   }
 
   @Get('/create')
-  async create(@Res() res: Response) {
-    return super.create(res, timelineEditFieldList, {isFormFile: true});
+  async create(@Res() res: Response, @Req() req: any) {
+    return super.create(res, req, timelineEditFieldList, {isFormFile: true});
   }
 
   @Get('/:id')
@@ -41,6 +42,7 @@ export class TimelineController extends AbaseManageController {
   }
 
   @Post('/save')
+  @UseFilters(ValidationFilter)
   @UseInterceptors(FileInterceptor('image', multerImage({subpath: 'timeline'})))
   async save(@Res() res: Response, @Req() req: any, @Body() itemSaveDto: TimelineSaveDto, @UploadedFile() file) {
     return super.save(res, req, itemSaveDto, {

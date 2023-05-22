@@ -1,19 +1,11 @@
 import {
   Injectable
 } from '@nestjs/common';
-import { hash, compare } from 'bcrypt';
 import { AdminRepository } from 'src/repositories';
+import { comparePassword } from 'src/utils';
 
 @Injectable()
 export class AuthService {
-
-  async hashPassword(password: string): Promise<string> {
-    return await hash(password, 12);
-  }
-
-  async comparePassword(password: string, storePasswordHash: string): Promise<boolean> {
-    return await compare(password, storePasswordHash);
-  }
 
   async validateAdmin(username: string, password: string): Promise<any> {
     const user = await AdminRepository.findOneBy({
@@ -22,7 +14,7 @@ export class AuthService {
     if (!user) {
       return null;
     }
-    const passwordValid = await this.comparePassword(password, user.password)
+    const passwordValid = await comparePassword(password, user.password)
     
     if (passwordValid) {
       return {
