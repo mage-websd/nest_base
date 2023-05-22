@@ -4,7 +4,6 @@ import { AuthService } from './services';
 import { AuthFilter, LocalStrategy, AuthMiddleware } from './middleware';
 import {
   AuthController,
-  HomeController,
   UserController,
   DashboardController,
   ConfigController,
@@ -21,7 +20,6 @@ import { SessionSerializer } from './utils';
 @Module({
   controllers: [
     AuthController,
-    HomeController,
     UserController,
     DashboardController,
     ConfigController,
@@ -47,6 +45,16 @@ import { SessionSerializer } from './utils';
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware)
-      .forRoutes(HomeController, DashboardController);
+      .forRoutes(
+        DashboardController,
+        UserController,
+        ConfigController,
+        BannerController,
+        VacxinController,
+        TimelineController,
+        ChildController,
+        NotificationController,
+        InjectionBookController,
+      );
   }
 }

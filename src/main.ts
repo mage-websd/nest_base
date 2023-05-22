@@ -13,7 +13,6 @@ import * as hbs from 'hbs';
 import * as flash from 'connect-flash';
 import { AppModule } from './app.module';
 import config from './config';
-import CORS_SITE from './config/cros';
 import { LogService } from './utils/logs/log.service';
 import { hbsHelper } from './utils';
 
@@ -23,7 +22,7 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors(CORS_SITE);
+  app.enableCors();
   app.use(
     session({
       secret: "shop1",
@@ -48,8 +47,8 @@ async function bootstrap() {
     res.locals.session = req.session;
     next();
   });
-  await app.listen(config.PORT, () => {
-    console.info(`--- 🚀 Server running on ${config.PORT} ---`);
+  await app.listen(config.PORT_ADMIN ?? config.PORT, () => {
+    console.info(`--- 🚀 Server admin running on ${config.PORT_ADMIN ?? config.PORT} ---`);
   });
 }
 bootstrap();

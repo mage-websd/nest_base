@@ -40,6 +40,9 @@
 1. In file custom.seed.ts, create class CustomSeed, has function `run()`
 1. Run cmd: `yarn cmd seed --class=custom`
 
+## Database demo
+1. Add admin user: yarn cmd seed --class=admin (user: admin / admin123)
+
 ## Docs feature
 [Docs feature view here](docs/)
 
