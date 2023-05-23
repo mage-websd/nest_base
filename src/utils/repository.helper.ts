@@ -7,11 +7,14 @@ import { getPathUrlFile } from "./file";
  */
 export const paginateObj = (queryObj: any = {}) => {
   let limit = queryObj.limit ?? 50;
-  const page = queryObj.page ?? 1;
   if (limit < 0 || limit > 500) {
     limit = 50;
   }
-  const offset = (page - 1) * limit;
+  let offset = queryObj.offset;
+  if (!offset) {
+    const page = queryObj.page ?? 1;
+    offset = (page - 1) * limit;
+  }
   return {
     take: limit,
     skip: offset
@@ -50,11 +53,11 @@ export const paginatorNavFind = async (repository: Repository<any>, query: any, 
   const where = whereObj(query, itemListSelect);
   return {
     total: await repository.count(where),
-    items: await repository.find({...selectObj, ...paginateObj(query), ...where, ...{
+    items: await repository.find({...{
       order: {
         id: "DESC",
       },
-    }}),
+    }, ...paginateObj(query), ...where, ...selectObj}),
   }
 };
 
@@ -88,3 +91,4 @@ export const saveItem = async (repository: Repository<any>, dto: any, optionsSav
   }
   return await repository.save(item);
 }
+

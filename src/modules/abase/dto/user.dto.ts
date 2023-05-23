@@ -36,6 +36,16 @@ export class UserSaveDto {
   username: string
 
   @IsOptional()
+  @ValidateIf(o => o.phone != '')
+  @IsUnique(UserRepository)
+  phone: string
+
+  @IsOptional()
+  @ValidateIf(o => o.email != '')
+  @IsUnique(UserRepository)
+  email: string
+
+  @IsOptional()
   password: string
 }
 

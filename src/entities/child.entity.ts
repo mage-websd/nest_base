@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
+import { User } from './user.entity';
+import { InjectionBook } from './injectionbook.entity';
 
 @Entity('child')
 export class Child extends AbaseExtends {
@@ -42,4 +44,14 @@ export class Child extends AbaseExtends {
 
   @UpdatedAt()
   updatedAt: Date;
+
+  @OneToOne(() => User, user => user.id)
+  @JoinColumn({
+    name: 'userId',
+    referencedColumnName: 'id'
+  })
+  user: User;
+
+  @OneToMany(() => InjectionBook, ib => ib.child)
+  injectionBooks: InjectionBook[];
 }

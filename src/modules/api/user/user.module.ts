@@ -1,24 +1,41 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { HomeController } from './controllers';
+import {
+  AuthController,
+  HomeController,
+  UserController,
+  ChildController,
+  TimelineController,
+  ConfigController,
+  BannerController
+} from './controllers';
+import { AuthApiMiddleware } from './middleware/auth.mdw';
 
 
 @Module({
   controllers: [
-    HomeController
+    HomeController,
+    AuthController,
+    UserController,
+    ChildController,
+    TimelineController,
+    ConfigController,
+    BannerController
   ],
   providers: [
-    
   ],
   imports: [
   ],
 })
-export class UserModule{}
-/* implements NestModule {
+export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware)
+    consumer.apply(AuthApiMiddleware)
       .forRoutes(
-       
+        UserController,
+        ChildController,
+        TimelineController,
+        ConfigController,
+        BannerController,
+        
       );
   }
 }
-*/

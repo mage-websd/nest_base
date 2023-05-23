@@ -1,4 +1,5 @@
 import { logErrorConsole } from "./logs";
+import config from "src/config";
 
 export const sleep = async (time = 10000) => {
   await new Promise((resolve) => setTimeout(() => resolve(true), time));
@@ -59,4 +60,18 @@ export const objEmptyToNull = (objItem: any, arrKey: string[]) => {
     }
   }
   return objItem;
+}
+
+export const itemsRenderImgUrl = (items: any[], cols=['image']) => {
+  if (!items || items.length === 0) {
+    return items;
+  }
+  items.forEach((item: any) => {
+    cols.forEach((col: string) => {
+      if (item[col]) {
+        item[col] = config.URL_STORAGE + item[col];
+      }
+    });
+  });
+  return items;
 }

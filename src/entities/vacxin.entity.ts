@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
+import { InjectionBook } from './injectionbook.entity';
 
 @Entity('vacxin')
 export class Vacxin extends AbaseExtends {
@@ -21,4 +22,7 @@ export class Vacxin extends AbaseExtends {
 
   @UpdatedAt()
   updatedAt: Date;
+
+  @OneToMany(() => InjectionBook, ib => ib.vacxin)
+  injectionBooks: InjectionBook[];
 }

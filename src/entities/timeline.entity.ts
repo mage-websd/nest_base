@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
+import { User } from './user.entity';
 
 @Entity('timeline')
 export class Timeline extends AbaseExtends {
@@ -33,4 +34,11 @@ export class Timeline extends AbaseExtends {
 
   @UpdatedAt()
   updatedAt: Date;
+
+  @OneToOne(() => User, user => user.id)
+  @JoinColumn({
+    name: 'userId',
+    referencedColumnName: 'id'
+  })
+  user: User;
 }

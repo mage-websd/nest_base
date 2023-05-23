@@ -22,13 +22,15 @@ export class CreateUser1683952997679 implements MigrationInterface {
           },
           {
             name: 'phone',
-            type: 'varchar(50)',
+            type: 'varchar(30)',
             isNullable: true,
+            isUnique: true,
           },
           {
             name: 'email',
             type: 'varchar(100)',
             isNullable: true,
+            isUnique: true,
           },
           {
             name: 'address',

@@ -1,6 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { CreatedAt, UpdatedAt } from '../utils/customColumns';
 import { AbaseExtends } from './abase-extend';
+import { User } from './user.entity';
+import { Child } from './child.entity';
+import { Vacxin } from './vacxin.entity';
 
 @Entity('injectionbook')
 export class InjectionBook extends AbaseExtends {
@@ -33,4 +36,25 @@ export class InjectionBook extends AbaseExtends {
 
   @UpdatedAt()
   updatedAt: Date;
+
+  @OneToOne(() => User, user => user.id)
+  @JoinColumn({
+    name: 'userId',
+    referencedColumnName: 'id'
+  })
+  user: User;
+
+  @OneToOne(() => Child, child => child.id)
+  @JoinColumn({
+    name: 'childId',
+    referencedColumnName: 'id'
+  })
+  child: Child;
+
+  @OneToOne(() => Vacxin, vacxin => vacxin.id)
+  @JoinColumn({
+    name: 'vacId',
+    referencedColumnName: 'id'
+  })
+  vacxin: Vacxin;
 }
