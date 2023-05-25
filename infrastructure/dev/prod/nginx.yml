@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  mb_nginx:
+    image: nginx
+    container_name: mb_nginx
+    restart: always
+    volumes:
+      - './nginx_sites:/etc/nginx/sites'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    networks:
+      - soda-network
+
+networks:
+  soda-network:
+    external: false
+    name: soda-network
