@@ -1,8 +1,8 @@
 {
-  "name": "nestjs",
+  "name": "dsvn-base-nestjs",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Soda",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -18,16 +18,28 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/config/db.ts",
+    "seed:run": "ts-node ./node_modules/@jorgebodega/typeorm-seeding/dist/cli.js seed -d ./src/config/db.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.3.1",
+    "@nestjs/typeorm": "^10.0.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "dotenv": "^16.4.5",
+    "log4js": "^6.9.1",
+    "moment": "^2.30.1",
+    "mysql2": "^3.10.1",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20",
+    "typeorm-transactional": "^0.5.0"
   },
   "devDependencies": {
+    "@jorgebodega/typeorm-seeding": "^6.0.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
@@ -50,6 +62,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.16.0",
     "typescript": "^5.5.2"
   },
   "jest": {
