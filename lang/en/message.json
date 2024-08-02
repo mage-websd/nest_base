@@ -1,0 +1,12 @@
+{
+  
+  "success": "success",
+  
+  "required": "Field :field is required.",
+  "max_string": "Field :field must not be greater than :max characters.",
+
+  "email": "Field :field must be a valid email address.",
+  "xss": "The symbols '<>&\":;' cannot be used.",
+
+  "unique": "Field :field has already been taken."
+}

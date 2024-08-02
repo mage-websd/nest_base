@@ -1,4 +1,4 @@
-Nestjs base DSVN
+Nestjs base
 ------
 
 ## Installation
