@@ -7,6 +7,22 @@ Nestjs base
 $ npm install
 ```
 
+## Docker run
+
+#### Production
+
+```
+cd infrastructure/prod
+docker compose -f prod.yml up --build -d
+```
+
+#### Developer local
+
+```
+cd infrastructure/local
+docker compose -f local.yml up
+```
+
 ## Command the app
 
 1. Start app
@@ -42,4 +58,6 @@ $ npm install
     ```
 
 ## DEVELOPER DOCS
-read more [docs](./docs/)
+read more
+- [Developer docs](./docs/modules)
+- [Docker docs](./docs/docker.md)

@@ -1,0 +1,20 @@
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: on-failure:5
+    volumes:
+      - minio-store:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+volumes:
+  minio-store:
+    external: false
+    name: minio-store

@@ -1,0 +1,19 @@
+services:
+  base_local:
+    build:
+      context: ../../
+      dockerfile: infrastructure/Dockerfile
+    image: base_local
+    container_name: base_local
+    restart: on-failure:5
+    env_file:
+      - ../../.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    ports:
+      - '5000:5000'
+    volumes:
+      - ../../:/app/
+    command: sh -c "npm install; npm run start:dev"

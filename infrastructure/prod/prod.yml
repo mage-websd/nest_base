@@ -1,0 +1,19 @@
+services:
+  base_prod:
+    build:
+      context: ../../
+      dockerfile: infrastructure/Dockerfile
+    image: base_prod
+    container_name: base_prod
+    restart: on-failure:5
+    env_file:
+      - ../../.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    ports:
+      - '80:5000'
+    volumes:
+      - ../../storages:/app/storages
+      - ../../logs:/app/logs
