@@ -38,6 +38,7 @@ package: @nestjs/jwt, bcrypt
     import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
     ```
 1. Use @UseGuards(AuthGuard) in controller
+1. Other, use middleware: `consumer.apply(AuthMiddleware).forRoutes('*');`
 
 #### Multi-language
 
@@ -48,7 +49,7 @@ package: @nestjs/jwt, bcrypt
     ```
     import __ from 'src/helpers/lang';
 
-    __('email', { field: 'mail' })
+    __('email', { label: 'mail' })
     ```
 
 #### Validation
@@ -65,8 +66,15 @@ package: class-validator
       {
         repository: UserRepository,
         column: 'mail',
-        field: 'mail',
+        label: 'mail',
       },
     ])
     mail: string;
     ```
+
+#### Import Export CSV
+package csv https://github.com/adaltas/node-csv
+Module: importexport
+
+1. Import + export csv
+    Sample in service importexport.service.ts

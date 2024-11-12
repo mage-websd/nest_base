@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import config from 'src/config';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { AuthGuard } from './guards/auth.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthGuard],
-  exports: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, AuthMiddleware],
+  exports: [AuthService, AuthGuard, AuthMiddleware],
 })
 export class AuthModule {}

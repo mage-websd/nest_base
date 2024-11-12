@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { genSalt, hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 import { LoginPost, RegisterPost } from '../dtos/auth.dto';
 import { UserRepository } from 'src/repositories';
 import __ from 'src/helpers/lang';
@@ -13,6 +14,7 @@ import __ from 'src/helpers/lang';
 @Injectable()
 export class AuthService {
   public constructor(private readonly jwtService: JwtService) {}
+
   public async login(body: LoginPost) {
     const user = await UserRepository.findOneBy({ mail: body.mail });
 
@@ -50,19 +52,34 @@ export class AuthService {
     );
   }
 
-  public async authenticated(token: string) {
-    const payload = this.jwtService.verify(token);
+  public async authenticated(request: Request) {
+    try {
+      const token = this.extractTokenFromHeader(request);
 
-    if (!payload || !payload.sub) {
+      if (!token) {
+        throw new UnauthorizedException();
+      }
+
+      const payload = this.jwtService.verify(token);
+
+      if (!payload || !payload.sub) {
+        throw new UnauthorizedException();
+      }
+
+      const user = await UserRepository.findOneBy({ id: payload.sub });
+
+      if (!user) {
+        throw new UnauthorizedException();
+      }
+
+      return user;
+    } catch (e) {
       throw new UnauthorizedException();
     }
+  }
 
-    const user = await UserRepository.findOneBy({ id: payload.sub });
-
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    return user;
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
