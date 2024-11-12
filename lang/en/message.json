@@ -2,11 +2,17 @@
   
   "success": "success",
   
-  "required": "Field :field is required.",
-  "max_string": "Field :field must not be greater than :max characters.",
+  "required": "Field :label is required.",
+  "int": "The :label field must be an integer.",
+  "string": "The :label field must be a string.",
+  "array": "The :label field must be an array.",
 
-  "email": "Field :field must be a valid email address.",
+  "max_string": "Field :label must not be greater than :max characters.",
+  "max_int": "The :label field must not be greater than :max.",
+
+  "email": "Field :label must be a valid email address.",
   "xss": "The symbols '<>&\":;' cannot be used.",
+  "in": "The selected :label is invalid.",
 
-  "unique": "Field :field has already been taken."
+  "unique": "Field :label has already been taken."
 }

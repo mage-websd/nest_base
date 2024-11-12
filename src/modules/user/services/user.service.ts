@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/entities';
 import { UserPhoneRepository, UserRepository } from 'src/repositories';
+import { UserPhoneDTO } from '../dtos/user.dto';
 
 @Injectable()
 export class UserService {
@@ -29,5 +30,16 @@ export class UserService {
       .innerJoin('p.user', 'u')
       .limit(10)
       .getRawMany();
+  }
+
+  public async addUserPhone(request: any, body: UserPhoneDTO): Promise<any> {
+    return UserPhoneRepository.save(
+      UserPhoneRepository.create({
+        userId: body.userId,
+        phone: body.phone,
+        createdUserId: request.user.id,
+        updatedUserId: request.user.id,
+      }),
+    );
   }
 }

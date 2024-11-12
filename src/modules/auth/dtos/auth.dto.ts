@@ -1,18 +1,17 @@
 import { IsEmail, IsNotEmpty, MaxLength, Validate } from 'class-validator';
-import { UniqueValidator } from 'src/helpers/validators/unique.validator';
-import { XssValidator } from 'src/helpers/validators/xss.validator';
 import { UserRepository } from 'src/repositories';
 import __ from 'src/helpers/lang';
+import { UniqueValidator, XssValidator } from 'src/helpers/validators';
 
 export class LoginPost {
   @IsNotEmpty({
     message: __('required', {
-      field: 'mail',
+      label: 'mail',
     }),
   })
   @MaxLength(50, {
     message: __('required', {
-      field: 'mail',
+      label: 'mail',
       max: 50,
     }),
   })
@@ -21,7 +20,7 @@ export class LoginPost {
     { ignore_max_length: true },
     {
       message: __('email', {
-        field: 'mail',
+        label: 'mail',
       }),
     },
   )
@@ -29,12 +28,12 @@ export class LoginPost {
 
   @IsNotEmpty({
     message: __('required', {
-      field: 'password',
+      label: 'password',
     }),
   })
   @MaxLength(20, {
     message: __('max_string', {
-      field: 'password',
+      label: 'password',
       max: 20,
     }),
   })
@@ -44,12 +43,12 @@ export class LoginPost {
 export class RegisterPost {
   @IsNotEmpty({
     message: __('required', {
-      field: 'name',
+      label: 'name',
     }),
   })
   @MaxLength(50, {
     message: __('max_string', {
-      field: 'name',
+      label: 'name',
       max: 50,
     }),
   })
@@ -57,12 +56,12 @@ export class RegisterPost {
 
   @IsNotEmpty({
     message: __('required', {
-      field: 'mail',
+      label: 'mail',
     }),
   })
   @MaxLength(50, {
     message: __('max_string', {
-      field: 'mail',
+      label: 'mail',
       max: 50,
     }),
   })
@@ -71,7 +70,7 @@ export class RegisterPost {
     { ignore_max_length: true },
     {
       message: __('email', {
-        field: 'mail',
+        label: 'mail',
       }),
     },
   )
@@ -79,19 +78,18 @@ export class RegisterPost {
     {
       repository: UserRepository,
       column: 'mail',
-      field: 'mail',
     },
   ])
   mail: string;
 
   @IsNotEmpty({
     message: __('required', {
-      field: 'password',
+      label: 'password',
     }),
   })
   @MaxLength(20, {
     message: __('max_string', {
-      field: 'password',
+      label: 'password',
       max: 20,
     }),
   })

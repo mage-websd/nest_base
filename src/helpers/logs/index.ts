@@ -17,7 +17,7 @@ import * as moment from 'moment';
  */
 const isPm2 = process.env.PM2_PROGRAMMATIC === 'true';
 const folder = resolve(
-  isPm2 ? process.env.pm_cwd : process.env.PWD ?? '',
+  isPm2 ? process.env.pm_cwd : (process.env.PWD ?? ''),
   'logs',
 );
 

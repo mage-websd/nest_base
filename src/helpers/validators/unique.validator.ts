@@ -7,11 +7,25 @@ import { Not, ObjectLiteral, Repository } from 'typeorm';
 import __ from '../lang';
 
 interface IUniqueOption {
-  repository: Repository<ObjectLiteral>;
-  column: string;
-  sameColumn?: string;
-  fieldName?: string;
+  repository: Repository<ObjectLiteral>; // repository - table find item unique
+  column: string; // column in table unique
+  sameColumn?: string; // column where not in
+  label?: string; // label replace message column name
 }
+
+/**
+ * use dto
+ * 
+ * @Validate(UniqueValidator, [
+    {
+      repository: UserRepository,
+      column: 'mail',
+      sameColumn: 'id',
+      label: 'mail',
+    },
+  ])
+
+ */
 
 @ValidatorConstraint({ name: 'unique', async: true })
 export class UniqueValidator implements ValidatorConstraintInterface {
@@ -39,7 +53,7 @@ export class UniqueValidator implements ValidatorConstraintInterface {
     const options: IUniqueOption = args.constraints[0];
 
     return __('unique', {
-      field: options?.fieldName ?? options.column,
+      field: options.label ?? options.column,
     });
   }
 }
