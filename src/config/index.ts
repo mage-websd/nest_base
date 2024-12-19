@@ -19,6 +19,8 @@ const config = {
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRE: Number(process.env.JWT_EXPIRE),
 
+  RABBITMQ_URL: process.env.RABBITMQ_URL,
+
   //// extends:
   isEnvProduction: process.env.APP_ENV ? process.env.APP_ENV === 'prod' : true,
 };

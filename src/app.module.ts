@@ -3,6 +3,7 @@ import { modules } from './modules';
 import DBsource from './config/db';
 import { RequestLog } from './helpers/interceptors/request-log';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         ...DBsource.options,
       }),
     }),
+    ScheduleModule.forRoot(),
     ...modules,
   ],
   providers: [],
